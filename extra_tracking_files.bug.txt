@@ -1,0 +1,122 @@
+# create the repository with file foo/bar.txt
+
+scott ~ $ mkdir tmp
+scott ~ $ cd tmp/
+scott ~/tmp $ mkdir foo
+scott ~/tmp $ touch foo/bar.txt
+scott ~/tmp $ git init
+Initialized empty Git repository in /home/project/tmp/.git/
+scott ~/tmp $ git add .
+scott ~/tmp $ gs
+# On branch master
+#
+# Initial commit
+#
+# Changes to be committed:
+# (use "git rm --cached <file>..." to unstage)
+#
+#  new file: foo/bar.txt
+#
+
+scott ~/tmp $ git commit -a
+Created initial commit 331fa22: * Add foo/bar.txt
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 foo/bar.txt
+scott ~/tmp $ git branch
+* master
+
+
+# create a new branch, and switch to it
+
+
+scott ~/tmp $ git checkout -b two
+Switched to a new branch "two"
+
+
+# delete foo dir
+
+scott ~/tmp $ git rm -rf foo/
+rm 'foo/bar.txt'
+scott ~/tmp $ git commit -a -m "* Get rid of foo dir"
+Created commit 96869c2: * Get rid of foo dir
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ delete mode 100644 foo/bar.txt
+
+
+# add a submodule in it's place:
+
+
+scott ~/tmp $ git submodule add git://github.com/smtlaissezfaire/guillotine.git foo
+Initialized empty Git repository in /home/project/tmp/foo/.git/
+remote: Counting objects: 6044, done.
+remote: Compressing objects: 100% (2780/2780), done.
+remote: Total 6044 (delta 3842), reused 5062 (delta 3157)
+Receiving objects: 100% (6044/6044), 1.15 MiB | 1038 KiB/s, done.
+Resolving deltas: 100% (3842/3842), done.
+scott ~/tmp $ git add .
+scott ~/tmp $ git status
+# On branch two
+# Changes to be committed:
+# (use "git reset HEAD <file>..." to unstage)
+#
+#  new file: .gitmodules
+#  new file: foo
+#
+scott ~/tmp $ git commit -a -m "* Add foo submodule"
+Created commit 61ae578: * Add foo submodule
+ 2 files changed, 4 insertions(+), 0 deletions(-)
+ create mode 100644 .gitmodules
+ create mode 160000 foo
+scott ~/tmp $ gs
+# On branch two
+nothing to commit (working directory clean)
+
+# make sure the submodules are init'ed, and updated
+
+scott ~/tmp $ git submodule
+-8aae7dc07ddd94f47d999a8be86d294eb295667a foo
+scott ~/tmp $ git submodule init
+Submodule 'foo' (git://github.com/smtlaissezfaire/guillotine.git) registered for path 'foo'
+scott ~/tmp $ git submodule update
+scott ~/tmp $ gb
+-bash: gb: command not found
+scott ~/tmp $ git branch
+  master
+* two
+
+
+
+###########################################################################
+# now, when switching back to master, all of the files from the submodule #
+# are still present                                                       #
+###########################################################################
+
+scott ~/tmp $ git checkout master
+Switched to branch "master"
+scott ~/tmp $ gs
+# On branch master
+# Untracked files:
+# (use "git add <file>..." to include in what will be committed)
+#
+#  foo/.autotest
+#  foo/.emproj
+#  foo/.gitignore
+#  foo/DEPENDENCIES
+#  foo/History.txt
+#  foo/Manifest.txt
+#  foo/PostInstall.txt
+#  foo/README.txt
+#  foo/Rakefile
+#  foo/SQL92_SPEC
+#  foo/TODO
+#  foo/benchmarks/
+#  foo/bin/
+#  foo/config/
+#  foo/ext/
+#  foo/lib/
+#  foo/script/
+#  foo/setup.rb
+#  foo/spec/
+#  foo/tasks/
+#  foo/website/
+nothing added to commit but untracked files present (use "git add" to track)
