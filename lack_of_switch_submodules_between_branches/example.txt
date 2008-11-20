@@ -1,0 +1,67 @@
+scott:play scott$ # setup
+scott:play scott$ mkdir no_switching_trees
+scott:play scott$ cd no_switching_trees
+scott:no_switching_trees scott$ mkdir foo
+scott:no_switching_trees scott$ touch foo/some_text.txt
+scott:no_switching_trees scott$ git init
+Initialized empty Git repository in /Users/scott/play/no_switching_trees/.git/
+scott:no_switching_trees(master) scott$ git add .
+scott:no_switching_trees(master) scott$ git commit -a -m "* Add a blank file"
+Created initial commit 01dcf46: * Add a blank file
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 foo/some_text.txt
+scott:no_switching_trees(master) scott$ 
+scott:no_switching_trees(master) scott$ # add a submodule, commit it, init it:
+scott:no_switching_trees(master) scott$ git submodule add git://github.com/smtlaissezfaire/git_submodule_bugs.git git_submodule_bugs
+Initialized empty Git repository in /Users/scott/play/no_switching_trees/git_submodule_bugs/.git/
+remote: Counting objects: 8, done.
+remote: Compressing objects: 100% (8/8), done.
+remote: Total 8 (delta 2), reused 0 (delta 0)
+Receiving objects: 100% (8/8), 2.32 KiB, done.
+Resolving deltas: 100% (2/2), done.
+scott:no_switching_trees(master) scott$ git add .
+scott:no_switching_trees(master) scott$ git commit -a -m "* Add submodule"
+Created commit 48420df: * Add submodule
+ 2 files changed, 4 insertions(+), 0 deletions(-)
+ create mode 100644 .gitmodules
+ create mode 160000 git_submodule_bugs
+scott:no_switching_trees(master) scott$ git submodule init
+Submodule 'git_submodule_bugs' (git://github.com/smtlaissezfaire/git_submodule_bugs.git) registered for path 'git_submodule_bugs'
+scott:no_switching_trees(master) scott$ git submodule update
+scott:no_switching_trees(master) scott$ 
+scott:no_switching_trees(master) scott$ # note: current commit:
+scott:no_switching_trees(master) scott$ 
+scott:no_switching_trees(master) scott$ cd git_submodule_bugs
+scott:git_submodule_bugs(master) scott$ echo "current commit: $(git rev-list HEAD | head -n 1)"
+current commit: 4b8f9627f04de2fce4e25453bbcc262bcbbcf508
+scott:git_submodule_bugs(master) scott$ cd -
+/Users/scott/play/no_switching_trees
+scott:no_switching_trees(master) scott$ 
+scott:no_switching_trees(master) scott$ # checkout branch two:
+scott:no_switching_trees(master) scott$ git checkout -b branch_two
+Switched to a new branch "branch_two"
+scott:no_switching_trees(branch_two) scott$ cd git_submodule_bugs
+scott:git_submodule_bugs(master) scott$ git checkout 27e6de0ed01190779caf550b9e8f7524bbfe358d
+Note: moving to "27e6de0ed01190779caf550b9e8f7524bbfe358d" which isn't a local branch
+If you want to create a new branch from this checkout, you may do so
+(now or later) by using -b with the checkout command again. Example:
+  git checkout -b <new_branch_name>
+HEAD is now at 27e6de0... * Add first bug report: extra tracking files
+scott:git_submodule_bugs(27e6de0...) scott$ cd -
+/Users/scott/play/no_switching_trees
+scott:no_switching_trees(branch_two) scott$ git commit -a -m "* Move submodule in branch 2 to a different commit"
+Created commit 9186401: * Move submodule in branch 2 to a different commit
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+scott:no_switching_trees(branch_two) scott$ 
+scott:no_switching_trees(branch_two) scott$ 
+scott:no_switching_trees(branch_two) scott$ # checkout master branch, again:
+scott:no_switching_trees(branch_two) scott$ git checkout master
+M	git_submodule_bugs
+Switched to branch "master"
+scott:no_switching_trees(master) scott$ 
+scott:no_switching_trees(master) scott$ # Still on commit from branch_two:
+scott:no_switching_trees(master) scott$ cd git_submodule_bugs
+scott:git_submodule_bugs(27e6de0...) scott$ echo "current commit: $(git rev-list HEAD | head -n 1)"
+current commit: 27e6de0ed01190779caf550b9e8f7524bbfe358d
+scott:git_submodule_bugs(27e6de0...) scott$ cd -
+/Users/scott/play/no_switching_trees
