@@ -1,0 +1,19 @@
+scott:tmp scott$ git clone git@github.com:bar/foo_com.git cached-copy
+Initialized empty Git repository in /Users/scott/play/tmp/cached-copy/.git/
+Enter passphrase for key '/Users/scott/.ssh/id_rsa':
+remote: Counting objects: 91309, done.
+remote: Compressing objects: 100% (27648/27648), done.
+remote: Total 91309 (delta 63851), reused 88568 (delta 61758)
+Receiving objects: 100% (91309/91309), 31.77 MiB | 130 KiB/s, done.
+Resolving deltas: 100% (63851/63851), done.
+Checking out files: 100% (6333/6333), done.
+ 
+scott:tmp scott$ ls
+cached-copy
+ 
+scott:tmp scott$ cd cached-copy/
+ 
+scott:cached-copy(master) scott$ git checkout -q -b deploy 41765afe53fa8695685bda187e8a1edb9ed909cc
+ 
+scott:cached-copy(deploy) scott$ git --version
+git version 1.6.0.1 

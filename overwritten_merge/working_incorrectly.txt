@@ -1,0 +1,16 @@
+foo@server04-s00356 /data/foo/shared $ git clone git@github.com:repos/foo_com.git /data/foo/shared/cached-copy
+Initialized empty Git repository in /data/foo/shared/cached-copy/.git/
+remote: Counting objects: 91309, done.
+remote: Compressing objects: 100% (27648/27648), done.
+remote: Total 91309 (delta 63851), reused 88568 (delta 61758)
+Receiving objects: 100% (91309/91309), 31.77 MiB | 1066 KiB/s, done.
+Resolving deltas: 100% (63851/63851), done.
+Checking out files: 100% (6333/6333), done.
+ 
+foo@server04-s00356 /data/foo/shared $ cd /data/foo/shared/cached-copy
+ 
+foo@server04-s00356 /data/foo/shared/cached-copy $ git checkout -q -b deploy 41765afe53fa8695685bda187e8a1edb9ed909cc
+error: Untracked working tree file 'vendor/plugins/calendar_helper/History.txt' would be overwritten by merge.
+ 
+foo@server04-s00356 /data/foo/shared/cached-copy $ git --version
+git version 1.5.6.4 
